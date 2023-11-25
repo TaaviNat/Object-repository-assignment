@@ -5,11 +5,9 @@ public class PalindromeChecker {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
+        String input = transformInput(scanner.nextLine());
 
-        String transformed = transformInput(input);
-
-        boolean isPalindrome = checkPalindrome(transformed);
+        boolean isPalindrome = checkPalindrome(input);
         if (isPalindrome) {
             System.out.println("The transformed input is a palindrome.");
         } else {
@@ -25,19 +23,21 @@ public class PalindromeChecker {
     }
 
     public static boolean checkPalindrome(String input) {
-        String reversed = reverseString(input);
-        if (input.equals(reversed)) {
-            return true;
-        } else {
-            return false;
+        int j = 0;
+        int length = input.length();
+        /* We only need to loop through half of the string
+         * and for odd length strings, we can ignore the middle character.
+         *
+         * We compare the first and last characters
+         * then the second and second to last characters
+         * and so on and so forth.
+         */
+        for (int i = input.length() - 1; i >= length / 2; i--) {
+            if (input.charAt(i) != input.charAt(j)) {
+                return false;
+            }
+            j++;
         }
-    }
-
-    public static String reverseString(String input) {
-        StringBuilder reversed = new StringBuilder();
-        for (int i = input.length() - 1; i >= 0; i--) {
-            reversed.append(input.charAt(i));
-        }
-        return reversed.toString();
+        return true;
     }
 }
